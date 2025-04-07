@@ -6,6 +6,9 @@ import NotFound from './components/NotFound';
 import NavigationBar from './components/NavigationBar';
 import Stories from './components/Stories';
 
+// Marvel API isn't working so using Pokemon API
+// Setting up routes
+
 function App() {
   return (
     <>
