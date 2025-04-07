@@ -1,42 +1,29 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-// task 3, implement Character Detail feature
+// Linking a character to its ID as a route parameter
 
-const CharacterDetail = ({ characterId }) => {
-  const [details, setDetails] = useState(null);
+const CharacterDetails = () => {
+  const { id } = useParams();
+  const [pokemon, setPokemon] = useState(null);
 
   useEffect(() => {
-    const fetchDetail = async () => {
-      if (!characterId) return;
+    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      .then((response) => response.json())
+      .then((data) => setPokemon(data));
+  }, [id]);
 
-      try {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${characterId}`);
-        setDetails(response.data);
-      } catch (error) {
-        console.error('Error fetching character detail:', error);
-      }
-    };
-
-    fetchDetail();
-  }, [characterId]);
-
-  if (!details) return <div>Select a Pokémon to see details</div>;
+  if (!pokemon) return <p>Loading...</p>;
 
   return (
-    <div className="character-detail">
-      <h2>{details.name}</h2>
-      <img src={details.sprites.front_default} alt={details.name} />
-      <p><strong>Height:</strong> {details.height}</p>
-      <p><strong>Weight:</strong> {details.weight}</p>
-      <p><strong>Abilities:</strong> {details.abilities.map(a => a.ability.name).join(', ')}</p>
+    <div>
+      <h2>{pokemon.name}</h2>
+      <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+      <p>Height: {pokemon.height}</p>
+      <p>Weight: {pokemon.weight}</p>
+      <p>Type(s): {pokemon.types.map((type) => type.type.name).join(', ')}</p>
     </div>
   );
 };
 
-CharacterDetail.propTypes = {
-  characterId: PropTypes.number
-};
-
-export default CharacterDetail;
+export default CharacterDetails;
