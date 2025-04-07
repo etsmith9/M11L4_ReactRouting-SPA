@@ -1,12 +1,8 @@
-function Home() {
-    return (
-        <div>
-            <h1> Welcome to the Pokemon App! </h1>
-            <p>This is the place to find all your Pokemon at one click.</p>
-        </div>
-    )
- }
- 
- 
- export default Home;
- 
+const Home = () => (
+    <div>
+      <h2>Home</h2>
+      <p>Welcome to the Pokémon Explorer Website!</p>
+    </div>
+  );
+  
+  export default Home;
